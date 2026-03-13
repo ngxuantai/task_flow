@@ -1,0 +1,43 @@
+version: "3.9"
+
+services:
+  app:
+    build: ./docker/php
+    volumes:
+      - ./backend:/var/www
+    depends_on:
+      - postgres
+      - redis
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./backend:/var/www
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: task_flow
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+
+  node:
+    image: node:20
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+
+volumes:
+  postgres_data:
