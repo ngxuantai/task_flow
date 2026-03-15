@@ -33,11 +33,11 @@ services:
     ports:
       - "6379:6379"
 
-  node:
-    image: node:20
-    working_dir: /app
-    volumes:
-      - ./frontend:/app
+  # node:
+  #   image: node:20
+  #   working_dir: /app
+  #   volumes:
+  #     - ./frontend:/app
 
 volumes:
   postgres_data:

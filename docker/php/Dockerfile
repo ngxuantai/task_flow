@@ -21,3 +21,9 @@ WORKDIR /var/www
 
 # Copy composer if needed
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+# Copy entrypoint script
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
